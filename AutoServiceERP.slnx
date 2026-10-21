@@ -5,5 +5,10 @@
     <Project Path="AuthServices.Domain/AuthServices.Domain.csproj" />
     <Project Path="AuthServices.Infrastructure/AuthServices.Infrastructure.csproj" />
   </Folder>
-  <Folder Name="/CustomerService/" />
+  <Folder Name="/CustomerService/">
+    <Project Path="CustomerService.API/CustomerService.API.csproj" Id="baa529e4-281e-4543-9af0-99d893be2595" />
+    <Project Path="CustomerServices.Application/CustomerServices.Application.csproj" Id="789feb06-f475-4549-ad62-a66071daffce" />
+    <Project Path="CustomerServices.Domain/CustomerServices.Domain.csproj" Id="e4fbb751-a0f9-4d92-83c5-f81a6308c87b" />
+    <Project Path="CustomerServices.Infrastructure/CustomerServices.Infrastructure.csproj" Id="53190307-2b29-43e5-9f55-15a25443380b" />
+  </Folder>
 </Solution>
