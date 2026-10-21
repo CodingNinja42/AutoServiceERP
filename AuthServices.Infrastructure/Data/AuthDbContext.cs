@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-using AuthServices.Domain.Entities;
+﻿using AuthServices.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthServices.Infrastructure.Data;
@@ -19,31 +12,29 @@ public class AuthDbContext : DbContext
 
     public DbSet<User> Users => Set<User>();
 
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<RefreshToken>(entity =>
         {
-            entity.HasKey(u => u.Id);
-
-            entity.Property(u => u.FullName)
-                .HasMaxLength(100)
+            entity.Property(rt => rt.Token)
+                .HasMaxLength(64)
                 .IsRequired();
 
-            entity.Property(u => u.Email)
-                .HasMaxLength(256)
-                .IsRequired();
-
-            entity.HasIndex(u => u.Email)
+            entity.HasIndex(rt => rt.Token)
                 .IsUnique();
 
-            entity.Property(u => u.PasswordHash)
-                .IsRequired();
-
-            entity.Property(u => u.Role)
-                .HasMaxLength(30)
-                .IsRequired();
+            entity.HasOne(rt => rt.User)
+                .WithMany()
+                .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }
