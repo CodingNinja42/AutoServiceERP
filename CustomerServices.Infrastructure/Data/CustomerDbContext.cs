@@ -1,17 +1,16 @@
-﻿
-using CustomerServices.Domain.Entities;
+﻿using CustomerServices.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CustomerServices.Infrastructure.Data;
 
 public class CustomerDbContext : DbContext
 {
-    public CustomerDbContext(
-        DbContextOptions<CustomerDbContext> options)
+    public CustomerDbContext(DbContextOptions<CustomerDbContext> options)
         : base(options)
     {
     }
 
+    // EF Core maps this entity to the Customers database table.
     public DbSet<Customer> Customers => Set<Customer>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,37 +19,25 @@ public class CustomerDbContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
+            entity.ToTable("Customers");
             entity.HasKey(c => c.Id);
 
             entity.Property(c => c.FirstName)
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(100).IsRequired();
 
             entity.Property(c => c.LastName)
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(100).IsRequired();
 
             entity.Property(c => c.Email)
-                .HasMaxLength(256)
-                .IsRequired();
+                .HasMaxLength(256).IsRequired();
 
-            entity.HasIndex(c => c.Email)
-                .IsUnique();
+            entity.HasIndex(c => c.Email).IsUnique();
 
-            entity.Property(c => c.PhoneNumber)
-                .HasMaxLength(20);
-
-            entity.Property(c => c.Address)
-                .HasMaxLength(300);
-
-            entity.Property(c => c.City)
-                .HasMaxLength(100);
-
-            entity.Property(c => c.State)
-                .HasMaxLength(100);
-
-            entity.Property(c => c.PostalCode)
-                .HasMaxLength(20);
+            entity.Property(c => c.PhoneNumber).HasMaxLength(20);
+            entity.Property(c => c.Address).HasMaxLength(300);
+            entity.Property(c => c.City).HasMaxLength(100);
+            entity.Property(c => c.State).HasMaxLength(100);
+            entity.Property(c => c.PostalCode).HasMaxLength(20);
         });
     }
 }

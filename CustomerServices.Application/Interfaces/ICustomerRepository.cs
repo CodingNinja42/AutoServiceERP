@@ -23,6 +23,8 @@ public interface ICustomerRepository
 
     Task UpdateAsync(Customer customer);
 
+    Task<bool> DeleteAsync(Guid id);
+
     Task SaveChangesAsync();
 }
 

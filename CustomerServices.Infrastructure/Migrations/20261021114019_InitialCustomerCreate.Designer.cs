@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerServices.Infrastructure.Migrations
 {
     [DbContext(typeof(CustomerDbContext))]
-    [Migration("20261021070957_InitialCustomerCreate")]
+    [Migration("20261021114019_InitialCustomerCreate")]
     partial class InitialCustomerCreate
     {
         /// <inheritdoc />
@@ -88,7 +88,7 @@ namespace CustomerServices.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -92,6 +92,7 @@ builder.Services.AddAuthentication(
 builder.Services.AddAuthorization();
 var app = builder.Build();
 app.UseMiddleware<AuthServices.API.Middleware.ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -99,7 +100,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication(); // Add this
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

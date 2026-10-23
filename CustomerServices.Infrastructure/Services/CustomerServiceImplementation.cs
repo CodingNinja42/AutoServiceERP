@@ -97,12 +97,7 @@ public class CustomerServiceImplementation : ICustomerService
         if (customer is null)
             return false;
 
-        // Soft delete: keep the customer record for service history.
-        customer.IsActive = false;
-        customer.UpdatedAt = DateTime.UtcNow;
-
-        await _repository.UpdateAsync(customer);
-        await _repository.SaveChangesAsync();
+        await _repository.DeleteAsync(id);
 
         return true;
     }
